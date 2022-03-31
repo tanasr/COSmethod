@@ -17,14 +17,21 @@ N=128;
 vcall_cos = call_gbm_cos(s0,K,T,sigma,r,q,N); %value cos method
 vput_cos = put_gbm_cos(s0,K,T,sigma,r,q,N);
 [vcall_bs, vput_bs] = blsprice(s0,K,T,r,sigma); %value black scholes
+err = sqrt((vcall_bs - vcall_cos)^2);
 
 disp('Europäische Call im Black Scholes Modell')
 fprintf('Cos methode : %.9f\n', vcall_cos)
 fprintf('Analytisch  : %.9f\n', vcall_bs)
+fprintf('Error mit N = %i\n', N);
+fprintf('Error = %.9f\n', err);
+
+err = sqrt((vput_bs - vput_cos)^2);
 
 disp('Europäische Put im Black Scholes Modell')
 fprintf('Cos methode : %.9f\n', vput_cos)
 fprintf('Analytisch  : %.9f\n', vput_bs)
+fprintf('Error mit N = %i\n', N);
+fprintf('Error = %.9f\n', err);
 disp('--------------------')
 
 
@@ -69,6 +76,9 @@ for j = 1:n
 end
 
 plot(KK,v)
+title(['Preis Call Option mit s0 = ',num2str(s0)]);
+ylabel('Preis');
+xlabel('Strike');
 
 
 
